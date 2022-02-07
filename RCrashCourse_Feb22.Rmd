@@ -1,0 +1,671 @@
+---
+title: "Intro to R Crash Course"
+author: "Fred LaPolla"
+date: "2/8/2022"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Intro to R: A Crash Course for Absolute Beginners
+
+
+
+***
+
+## R Notebooks
+
+This file will walk you through every step of today's class.  Throughout the R notebook, you will see the example code displayed like this:
+
+```{r}
+print(2  +  2)
+
+```
+
+***
+
+## Objectives
+
+Learning R is a journey, and you should not expect to walk out of one workshop with mastery. By the end of today's class you should be able to:
+
+1) Recognize R's syntax and understand how to format an argument
+2) Understand common sources of problems in R and how to troubleshoot them
+3) Know where to look for more information
+4) Be able to load in data from a csv
+5) Be able to load a package and find information on its functions
+
+***
+
+## Getting Started
+
+In this class, we are using an R Notebook RStudio, which is an integrated development environment (IDE).
+
+***
+	
+## Scripting vs. Processing vs. Markdown
+
+This class is taught using an R Notebook, which is a type of R Markdown file. It allows you to have text with embedded code. For example we can provide explanatory text and then offer a line of R code for you to execute. Try running the following code to do a simple math problem:
+
+```{r}
+2+2
+```
+
+R Markdown files are primarily used for presenting your work to others. This class is using a type of markdown file called an R notebook. Markdown can be made into an HTML page, PDF or word document through a process called "knitting." The difference between a Markdown file and a Notebook are how they execute the code (as a chunk vs line by line), but this is not a concern today.
+
+***
+
+## Scripting
+
+If you are not writing code to be published and read in a narrative way, you may still want to have a file that saves comments and stores code. A script file is a common way to do this. Having a an R script will let you leave comments to yourself or others, provide a file for others to see what you have done, make your research more reproducible or rerun analyses.
+
+To create a new R script, under the menus go to File -> New File -> R Script. This will open a file called Untitled1 in the upper left panel of R Studio. There are two types of things you can enter in this window:
+1)	Comments: any line that starts with a # is interpreted by R as a comment and is not processed
+2)	Commands: any line that does NOT start with a # is interpreted as a command and R will attempt to process it
+
+Type the following into the script window:
+
+	# Create a vector x
+x <- c(1,2,5,6)
+
+***
+
+## Calculate the mean of x
+
+mean(x)
+
+Save the file as PracticeScript.R, and then run dir().  You should see that the script is now in your working directory. There are several ways you can run the contents of the script:
+
+1)	Copy and paste the commands you want to run into the Console panel
+2)	Select the commands you want to run and hit Ctrl-Enter
+3)  Select the commands you want to run and hit the Run button at the top (looks like a "play" button)
+4)	Run the source function: source(PracticeScript.R) to run the entire contents of the script.
+
+***
+
+## R Console
+
+You can also type code directly into the console. This may be done as you are trying out work that may not want to save right away and are searching for the best solution. Then afterwards you can copy and paste it into the scripting pane to save for later. The console is like your scrap paper, good for working but not for saving. 
+
+In the R Console, you can use tab completion and up arrow to save typing!  
+
+Type the first part of command or variable name, you can scroll through the options that appear and hit tab to fill in the option you want.
+
+Use up arrow to scroll back through commands. You can then re-run a previous command, or modify it and run a new command.
+
+***
+
+## Command line versus menu options
+
+A number of functions can be executed either by typing in the Console or by using menu options. For example, the working directory is the folder R will look in for files, and you can set this working directory one of three ways:
+
+1)	Typing the function setwd() in the command line 
+2)	choosing the "Set as Working Directory" option under the More button on the Navigation Pane
+3)	Selecting Session-> Set Working Directory from the top        menu bar.
+
+If you want to check what your current working directory is, use the command getwd:
+
+```{r}
+getwd()
+```
+
+***
+
+## Working Directory
+
+
+If you want to find out what files are in your current working directory is, use the command dir:
+
+```{r}
+dir()
+```
+
+***
+
+## Reading in CSVs
+
+Next we will read in our data, which is in a CSV file, but R can read almost any type of file. First, we can look at the help text for the function we will use.
+
+The syntax "?[some function]" will open a help page if one exists. This is a great way to get a sense of what parts of a function or "arguments" are needed to run a function. Not all of the parts of a function listed in the help page will be necessary, most are optional. The best way to get a sense of what is needed is to see what others have done and trial and error.
+
+```{r}
+?read.csv
+```
+
+Note: There are many arguments but we only need to specify those for which the default value is not what we want.
+
+***
+
+## read.csv()
+
+You can pull a CSV from a web source, as below, or if it is on your computer you can just run:
+
+nyc <- read.csv("yourFile.csv"")
+
+```{r}
+
+nyc <- read.csv("https://raw.githubusercontent.com/fredlapolla/RCrashCourseFeb22/main/NYC_HANES_DIAB.csv")
+
+```
+
+
+***
+
+## Troubleshooting and Understanding Errors
+
+When you first get started with R, expect to see lots of error messages! Here are some helpful hints for troubleshooting some common errors.
+
+Common error sources:
+
+>- Typos
+  + R is Case Sensitive. It is not space sensitive
+>- Unclosed parentheses or quotation marks
+>- Commas
+>- Arguments that a command does not know how to handle
+
+If you see a + plus sign after your command, it means somewhere a parenthesis or quotation mark did not close.
+
+Hit *escape* to clear the command and try again after looking for typos.
+
+
+
+***
+
+##	Getting to Know Your Data
+
+Back to the data frame you read into your Global Environment. How can you get a sense of what data we have in the NYC Hanes data frame looks like?
+
+There are a several ways to explore the contents of the dataset. You could type in the name of the data frame, but unless your data frame is very small, that is probably not a good idea! If you do want to see the full data frame, you can click on the name of the data frame in the Environment pane this actually runs the following function:
+
+(Here is a useful command that I must run in the console due to the R slidy slides not liking it)
+
+**View(nyc)**
+
+
+
+That is a lot of information to try to parse, but R has functions that allow you to find out useful information about the data frame. A good way to start is by calling the str() function with the name of the data frame as the argument. This function shows the structure of the data. 
+
+
+```{r}
+str(nyc)
+```
+
+***
+## Summary
+
+Notice that this data frame has 1527 observations and 23 variables. Remember that observations correspond to the rows of the data frame and variables correspond to its columns.
+
+You can get some basic summary statistics about your data using the command summary().
+
+```{r}
+summary(nyc)
+```
+
+
+This displays different types of stats about each variable, depending on its type. For continuous variables, summary returns the mean, median, quartiles, minimum, maximum and count of NAs. For categorical variables, summary returns a count of how many items are in each category. Let us explore why this is by looking at the class of these variables. A variable is referred to using the date frame name, then $, and then the variable name.
+
+***
+
+## R holds several types of data:
+
+>- Numbers (e.g. 4.5, 100, etc.)
+
+>- Integer (writted 1L, meaning 1)
+
+>- Characters (string, e.g. "Fred")
+
+>- Factor (categorical, e.g. "Population Health", "DGIM", and ordinal e.g. "PGY1", "PGY2", "PGY3" )
+
+>- Logical (e.g. True False)
+
+>- Complex (e.g. 1+i, probably this does not matter)
+
+
+***
+
+## Let's take a look
+
+```{r}
+class(nyc$AGEGROUP)
+```
+
+Does this seem right?
+
+***
+
+Let's fix it:
+
+```{r}
+nyc$AGEGROUP<- factor(nyc$AGEGROUP, levels = 1:3, labels = c("20-39", "40-59", "60+"), ordered = TRUE)
+```
+
+
+
+
+***
+
+## Exercise: 
+
+Reclassify DX_DBTS, a variable that holds three groups, 1) Diabetes with a diagnosis; 2) Diabetes with no diagnosis and 3) No Diabetes. 
+
+```{r}
+
+```
+
+
+***
+
+## R holds several structures of data
+
+>- Dataframes - Analogous to a spreadsheet, columns and rows of different types of data
+
+>- Matrices - Columns and rows of all one type of data (e.g. all numeric)
+
+
+>- Lists - A collection of objects that do not need to be the same type
+
+>- Vectors - A collection of objects of the same type (like a list)
+
+
+
+Depending on what types of analysis you are doing, the difference could be important
+
+***
+
+## Exercise: 
+
+What type of structure is nyc?
+
+```{r}
+
+```
+
+
+***
+
+
+
+The functions head() or tail() allow you to look at the first or last rows of a data frame. You can specify how many rows are displayed (default is 6 rows).
+
+
+```{r}
+head(nyc, n=5)
+```
+
+***
+
+You can also generate a frequency table with the command table:
+
+```{r}
+table(nyc$AGEGROUP)
+```
+
+
+
+
+
+The function names() returns a list of the variables or column names in our dataset. This is useful if you need to check the spelling or capitalization of variables, or to find out the column number that corresponds to a variable (you can refer to a column by its number or name).
+
+
+```{r}
+names(nyc)
+```
+
+***
+
+#   Processing and Working with Data
+
+In this section, you will learn to use R to do some basic processing and cleaning of data (data wrangling) in order to make it easier to work with. 
+
+***
+
+## Indexing
+
+Often, you will not want to analyze an entire dataset, but rather a subset of it, a given set of variables and observations. Remember the syntax in R -- when you access the elements of a data frame, the first number in the square brackets is the row number (observations) and the second is the column number (variables). So nyc[2,4] is the second observation of the 4th variable (order). There are several ways to pull out multiple rows/columns:
+
+Putting a colon between two numbers will return a range of rows or columns, referred to as a slice, e.g. 1:5 will return elements 1,2,3,4,5
+
+***
+
+
+## Indexing
+
+Note that while the syntax for accessing rows and columns looks the same, the meaning is very different since pulling out a set of observations, for example taking the first five observations of all the NYC HANES data data
+
+```{r}
+nyc[1:5, ]
+
+```
+
+
+...is a very different concept than pulling out the first two variables (number and name) for all the observations.
+
+```{r}
+nyc[, 1:5]
+
+```
+
+***
+
+## Concatenating
+
+Using the function c(), which concatenates numbers, to include non-consecutive values, e.g. c(1,3,5) will return elements 1,3,5
+
+Leaving it blank either before or after the comma will return all observations or variables, respectively.
+
+***
+
+## Concatenating
+
+Using the concatenation function c(), allows you to select observations or variables that are not consecutive, for example this will select the 1st, 5th, and 80th observations of the name and order :
+
+```{r}
+nyc[c(1,5,80), c(1,5)]
+```
+
+***
+
+## Deleting
+
+It is also possible to use this syntax to remove data. For example, this creates a new dataset with everything except the 1st column.
+
+```{r}
+no_first <- nyc[, -1]
+```
+
+***
+
+##	Dealing with NAs
+
+This is a very important topic in data processing. Often a dataset will have missing values, typically represented by NAs. Applying functions to variables with NAs can be problematic. For example, applying the mean function to the TRIGLYCERIDE variable in the nyc_hanes dataset.
+
+```{r}
+mean(nyc$TRIGLYCERIDE)
+```
+
+
+R returns a mean of NA because there are NA values in this variable, but you can tell R to ignore NAs and return the mean of the existing data.
+
+```{r}
+mean(nyc$TRIGLYCERIDE,  na.rm  =  TRUE)
+
+```
+
+***
+
+## is.na()
+
+You can also use is.na() with indexing to make subsets with no NAs.
+
+is.na() returns a logical vector of if a value is NA (missing) or not:
+
+```{r}
+head(is.na(nyc$CHOLESTEROLTOTAL))
+```
+
+Running the opposite of is.na(), with a ! will mark all non-missing values as TRUE:
+
+```{r}
+head(!is.na(nyc$CHOLESTEROLTOTAL))
+```
+
+So we can combine this with indexing to get a subset of non-missing values:
+
+```{r}
+head(nyc[!is.na(nyc$CHOLESTEROLTOTAL),])
+```
+
+
+***
+
+##	Installing and Working with Packages
+
+R has quite a bit of built-in functionality, but there are also many, many free packages that add functions that are not part of the base R functionality. You can download and install these packages, then tell R which packages you want to use, in order to pull in functions that make your work easier. By selecting install under the Packages tab (or using the install.packages() function), you can choose the packages you want to install. 
+
+Using the install button, install the package dplyr now. This package has many functions that make data processing easier. 
+
+Once you have installed a package, you still need to tell RStudio when you want to use it by calling the library() function.
+
+***
+
+#  Visualizations 
+
+
+***
+
+## Plot
+
+Plot is a quick way to make a chart, typically for exploring your data. The general argument will be:
+
+  plot(X, Y) 
+  
+For two variables, q plot will default to a scatter plot,
+
+ 
+```{r}
+plot(nyc$UCREATININE, nyc$SPAGE)
+```
+ 
+*** 
+
+## Histograms
+
+One of the most useful charts you may make is a histogram. A histogram is like a bar chart that displays the distribution of our data, basically with each bar presenting how many records fall into a subset of values. We use histograms to assess quickly if our data is normally distributed, or has a skew.
+
+```{r}
+hist(nyc$UCREATININE)
+```
+
+***
+
+## Boxplot
+
+Another chart that displays skew, as well as key values like median and quartiles is a boxplot:
+
+```{r}
+boxplot(nyc$CHOLESTEROLTOTAL ~ nyc$GENDER, na.rm=T)
+```
+
+***
+
+## Exercise: 
+
+Create a visualization to assess the skew of LEAD and of HDL levels. 
+
+```{r}
+
+```
+
+
+
+***
+
+
+## Subsets
+
+Sometimes it is desirable to create a subset of a dataset that only contains those observations for which all there is a complete set of data, that is, no NAs. The na.omit() function will remove all observations that are not complete. So any row that has even a single NA will be deleted.
+
+```{r}
+no_na <- na.omit(nyc)
+
+```
+
+
+A more conservative approach is to remove only those observations that have NAs in key variables. For example, removing only those animals from  full_data  for whom there is an NA in the rem variable. This can be done using the function is.na(). In this case, we want to modify the function by sing the exclamation mark (logical NOT symbol), so that we can specify that we want all values that are NOT NA.
+
+```{r}
+has_cholesterol <- filter(nyc, !is.na(nyc$CHOLESTEROLTOTAL))
+
+```
+
+
+
+***
+
+
+## Data Wrangling
+
+
+
+```{r}
+#install.packages("tidyverse",  repos =  "http://lib.stat.cmu.edu/R/CRAN/")
+
+library(tidyverse)
+```
+
+
+
+
+***
+
+#Subsetting Observations
+
+We used indexing to pull out subsets of observations of our data frame, but often when you pull out a subset of observations, you want observations that meet certain criteria. The function, filter(), in dplyr that allows you to easily do that using logic operators. The following are logic operators in R:
+
+Function	Operator
+>- EQUALS	==
+>- AND		&	
+>- OR	|
+>- NOT	!
+
+NOTE: A single = is used for assignment, a double == is a logical operator and is checking to see if the statement is true
+
+***
+
+## Filter
+
+The function filter() will need two arguments:
+1) the data frame of interest
+2) the logical condition to apply to the observations
+
+Let's filter for only diabetics
+
+```{r}
+diabetics  <-  filter(nyc,  nyc$DX_DBTS  ==  1)
+```
+
+***
+
+## Logic and filtering
+
+You can use logical operators (AND = &, OR = |, NOT = !) to create complex conditions:
+
+  
+```{r}
+youngerDiabetics  <-  filter(nyc, nyc$DX_DBTS == 1  &  nyc$AGEGROUP  ==   1)
+```
+
+***
+
+## Exercise: 
+
+Create a subset of the nyc_hanes dataset that has data only for the oldest group of diabetics that have a total cholesterol over 200. How many observations are in the resulting dataset?
+
+```{r}
+
+```
+
+
+
+
+***
+
+## Continuing Your R Journey
+This class has been a very basic introduction to working with data using R, but of course, there is much, much more that R can do. Fortunately, there are many ways to get help figuring out how to do new things in R, or troubleshooting when your R commands don't work the way you think they should.
+
+***
+
+## Google is your friend
+Getting a cryptic error message? Trying to figure out what function does what you are trying to do? Chances are very good that someone else has had your exact question and has gotten it answered! Google! And be as specific as possible!  And look in your search results for the following sites:
+
+1) Stack Overflow: site where people can ask questions and the community will answer. Essential resource! 
+
+(https://stackoverflow.com): 
+
+2)CRAN - The Comprehensive R Archive Network: basically the official site of R. Lots of documentation is hosted there, so you can usually find thorough descriptions of functions and packages
+
+https://cran.r-project.org
+
+3)	R Bloggers: user-created tutorials on a variety of topics 
+
+https://www.r-bloggers.com
+
+4)	Quick-R: a clear guides to common operations in R, run by DataCamp which also has online classes on a freemium model
+
+https://www.statmethods.net/index.html
+
+***
+
+##	Recommended Books
+These resources provide nice overview information to help you learn more about accomplishing general data tasks in R.
+1) Field, Andy, Discovering Statistics Using R
+2) Lander, Jared P. R for Everyone
+3)	Teetor, Paul. The R Cookbook: Proven Recipes for Data Analysis, Statistics, and Graphics
+4)	Grolemund, Garrett & Wickham, Hadley. R for Data Science
+
+***
+
+##	Do Something (Anything!) in R
+Find something that you have done or were going to do in a spreadsheet, or another programming language or just make something up to do, and do it in R instead. 
+
+1)	Read in a file  -- read.csv(file = FILENAME.csv)
+2)	Use select or filter to grab a subset of the data
+3)	Use mean, max, etc. for descriptive statistics do not forget to use na.rm!
+4)	Save your code in an R file
+5)	Save your data, write.csv(DATAFRAME, file = "FILENAME.csv")
+
+If you do not remember how to do something, or want to do something that was not covered in class:  Google it!! The only way to learn R is to use it!
+
+***
+
+## Practice
+
+
+
+
+Try making a new dichotomous variable of triglycerides (coding it as 1 or 0 based on high or low value). 
+
+```{r}
+
+```
+
+Make gender into a factored variable (hint: check the codebook at http://nychanes.org/data/ to see what value correspond to which number)
+
+```{r}
+
+```
+
+Convert DX_DBTS to a factor and make a frequency table. Bonus: make a cross table of DX_DBTS by Age Group
+
+```{r}
+
+```
+
+Find the mean amount of LEAD blood levels in the dataframe:
+
+```{r}
+
+```
+
+
+Try making a plot scatter plot of SPAGE vs Total Cholesterol.
+
+```{r}
+
+```
+
+Try making a histogram of the one variable in nyc. 
+
+```{r}
+
+```
+
+Try making a boxplot of creatinine separated by diabetes status.
+
+```{r}
+
+```
